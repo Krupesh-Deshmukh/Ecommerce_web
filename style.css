@@ -1,3 +1,89 @@
-*{
-    margin: 1px;
-}
+ 
+
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #eaa0a2; /* Warm, soft cream background */
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        /* Navigation Bar Styles */
+        nav {
+            background-color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: center; /* Horizontally centers the heading */
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+            border-bottom: 3px solid #ff6f00; /* Warm orange accent line */
+        }
+
+        nav h2 {
+            font-family: 'Playfair Display', serif;
+            color: #c60f4f; /* Rich, appetizing reddish-orange */
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        /* Content Section Styles */
+        .content {
+            max-width: 800px;
+            margin: 5rem auto; /* Centers the whole container on the page */
+            padding: 3rem 2rem;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            text-align: center; /* Centers all text lines */
+            font-size: 1.2rem;
+            color: #555555;
+            font-weight: 300;
+            border-left: 5px solid #ffb300; /* Subtle gold accent tag */
+        }
+
+        /* Styling for the historical/highlighted text */
+        .content em {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #d84315;
+            font-weight: 600;
+        }
+ 
+        .highlight {
+            color: #ff6f00;
+            font-weight: 600;
+        }
+
+        nav h2 img {
+        height: 50px;          /* Adjust this height to match your logo size */
+        width: auto;           /* Keeps the image from stretching distortion */
+        vertical-align: middle; /* Perfectly aligns the image with the text baseline */
+        margin-right: 12px; 
+        margin-left: 12px;   /* Adds a clean space between the logo and text */
+        }
+
+       footer {
+       background-color: #333333;
+       position: fixed;
+       bottom: 0;
+       left: 50%;
+       transform: translateX(-50%);
+       height: 50px; 
+       width: 100%;  
+       letter-spacing: 1px;
+       color: #ffffff;     /* Correct property for changing text color */
+       display: flex;      /* Aligns content inside the footer */
+       align-items: center; /* Centers content vertically */
+       justify-content: center;
+       padding: 0 20px;    /* Adds breathing room on the sides */
+       }
+
+
+    
