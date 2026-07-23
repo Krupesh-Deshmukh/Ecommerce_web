@@ -3,10 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="KD Tiffin Services — home-cooked Indian thalis and monthly tiffin subscriptions, delivered daily since 1992.">
+    <meta name="description" content="KD Tiffin Services — home-cooked Indian thalis and monthly tiffin subscriptions, delivered daily to your door in Pune since 1992.">
+    <meta name="keywords" content="tiffin service, Pune tiffin, home cooked food, thali delivery, monthly tiffin subscription, dabba service">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#7A1225">
+    <meta name="author" content="KD Tiffin Services">
 
-    <!-- Favicon: inline SVG, no external file dependency to break -->
-   <link rel="icon"  href="C:\Users\krupe\Downloads\favicon.png">
+    <!-- Open Graph / Social sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="KD Tiffin Services — Home-cooked, delivered daily">
+    <meta property="og:description" content="Home-cooked Indian thalis and monthly tiffin subscriptions, delivered fresh and hot every day since 1992.">
+    <meta property="og:locale" content="en_IN">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="KD Tiffin Services — Home-cooked, delivered daily">
+    <meta name="twitter:description" content="Home-cooked Indian thalis and monthly tiffin subscriptions, delivered fresh and hot every day since 1992.">
+
+    <!-- Favicon: inline SVG data URI, no external file dependency to break -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237A1225'/%3E%3Crect x='16' y='14' width='32' height='8' rx='2' fill='%23D9A438'/%3E%3Crect x='16' y='24' width='32' height='8' rx='2' fill='%23F3E7D6'/%3E%3Crect x='16' y='34' width='32' height='8' rx='2' fill='%23D9A438'/%3E%3Crect x='16' y='44' width='32' height='8' rx='2' fill='%23F3E7D6'/%3E%3Crect x='27' y='8' width='10' height='6' rx='2' fill='%238A8D91'/%3E%3C/svg%3E">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,37 +27,56 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,600&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FoodEstablishment",
+      "name": "KD Tiffin Services",
+      "description": "Home-cooked Indian thalis and monthly tiffin subscriptions, delivered daily.",
+      "foundingDate": "1992",
+      "servesCuisine": "Indian",
+      "areaServed": "Pune",
+      "priceRange": "₹₹"
+    }
+    </script>
+
     <title>KD Tiffin Services — Home-cooked, delivered daily</title>
 </head>
 <body>
 
-    <!-- Header Navigation -->
-    <nav>
-        <div class="brand">
-            <svg class="brand-mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect width="64" height="64" rx="14" fill="#7A1225"/>
-                <rect x="16" y="14" width="32" height="8" rx="2" fill="#D9A438"/>
-                <rect x="16" y="24" width="32" height="8" rx="2" fill="#F3E7D6"/>
-                <rect x="16" y="34" width="32" height="8" rx="2" fill="#D9A438"/>
-                <rect x="16" y="44" width="32" height="8" rx="2" fill="#F3E7D6"/>
-                <rect x="27" y="8" width="10" height="6" rx="2" fill="#8A8D91"/>
-            </svg>
-            <h2>KD Tiffin Services<span class="est">Est. 1992 &middot; Homestyle</span></h2>
-        </div>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-        <!-- Cart Status Button -->
-        <button class="cart-btn" onclick="openCheckout()" aria-label="View your order">
-            🍱 Order <span class="cart-figure" id="cart-count">0</span> · ₹<span class="cart-figure" id="cart-total">0</span>
-        </button>
-    </nav>
+    <!-- Header Navigation -->
+    <header>
+        <nav aria-label="Primary">
+            <div class="brand">
+                <svg class="brand-mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="KD Tiffin Services logo">
+                    <rect width="64" height="64" rx="14" fill="#7A1225"/>
+                    <rect x="16" y="14" width="32" height="8" rx="2" fill="#D9A438"/>
+                    <rect x="16" y="24" width="32" height="8" rx="2" fill="#F3E7D6"/>
+                    <rect x="16" y="34" width="32" height="8" rx="2" fill="#D9A438"/>
+                    <rect x="16" y="44" width="32" height="8" rx="2" fill="#F3E7D6"/>
+                    <rect x="27" y="8" width="10" height="6" rx="2" fill="#8A8D91"/>
+                </svg>
+                <h2>KD Tiffin Services<span class="est">Est. 1992 &middot; Homestyle</span></h2>
+            </div>
+
+            <!-- Cart Status Button -->
+            <button type="button" class="cart-btn" onclick="openCheckout()">
+                <span aria-hidden="true">🍱 Order <span class="cart-figure" id="cart-count">0</span> · ₹<span class="cart-figure" id="cart-total">0</span></span>
+                <span class="sr-only" id="cart-sr-label">View your order, currently 0 items, total ₹0</span>
+            </button>
+        </nav>
+    </header>
 
     <!-- Hero -->
-    <section class="hero">
+    <section class="hero" aria-label="Introduction">
         <div class="hero-text">
             <span class="eyebrow">Daily tiffin &middot; Pune &amp; nearby</span>
             <h1>Home-cooked meals, <em>stacked in steel</em>, at your door by lunch.</h1>
             <p>Since 1992, KD Tiffin has been packing fresh sabji, dal, rotis and rice the way your own kitchen would — no shortcuts, no preservatives, just today's cooking in today's tiffin.</p>
-            <button class="hero-cta" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">
+            <button type="button" class="hero-cta" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">
                 See today's thalis ↓
             </button>
         </div>
@@ -53,29 +85,22 @@
                 <path class="steam" d="M70 40 C 60 20, 80 20, 70 0" stroke="#C7C9CC" stroke-width="5" fill="none" stroke-linecap="round"/>
                 <path class="steam s2" d="M100 40 C 90 20, 110 20, 100 0" stroke="#C7C9CC" stroke-width="5" fill="none" stroke-linecap="round"/>
                 <path class="steam s3" d="M130 40 C 120 20, 140 20, 130 0" stroke="#C7C9CC" stroke-width="5" fill="none" stroke-linecap="round"/>
-
-                <!-- handle -->
                 <path d="M80 46 Q100 20 120 46" stroke="#8A8D91" stroke-width="8" fill="none" stroke-linecap="round"/>
-
-                <!-- tiers -->
                 <rect x="30" y="44" width="140" height="44" rx="10" fill="#D9A438"/>
                 <rect x="30" y="44" width="140" height="10" rx="5" fill="#EFC46B"/>
-
                 <rect x="26" y="92" width="148" height="44" rx="10" fill="#F3E7D6"/>
                 <rect x="26" y="92" width="148" height="10" rx="5" fill="#FFFDF8"/>
-
                 <rect x="30" y="140" width="140" height="44" rx="10" fill="#D9A438"/>
                 <rect x="30" y="140" width="140" height="10" rx="5" fill="#EFC46B"/>
-
                 <rect x="20" y="188" width="160" height="40" rx="12" fill="#7A1225"/>
                 <rect x="20" y="188" width="160" height="10" rx="5" fill="#93283B"/>
             </svg>
         </div>
     </section>
 
-    <main class="main-container">
+    <main class="main-container" id="main-content">
         <!-- Dynamic Greeting Banner -->
-        <div id="time-greeting" class="banner-greeting">Loading today's special…</div>
+        <div id="time-greeting" class="banner-greeting" role="status">Loading today's special…</div>
 
         <!-- Tiffin Menu Section -->
         <div class="section-heading" id="menu">
@@ -83,11 +108,11 @@
             <span>Packed fresh &middot; delivered hot</span>
         </div>
 
-        <div class="menu-grid">
-            <article class="card">
-                <div class="card-body">
+        <ul class="menu-grid" aria-label="Tiffin menu">
+            <li class="card" data-item="Veg Standard Thali">
+                <article class="card-body">
                     <div class="card-top-row">
-                        <span class="veg-dot" aria-hidden="true"></span>
+                        <span class="veg-dot" role="img" aria-label="Vegetarian"></span>
                         <h3>Veg Standard Thali</h3>
                     </div>
                     <p>4 chapati, seasonal sabji, dal, steamed rice &amp; salad.</p>
@@ -95,15 +120,22 @@
                         <span class="price">₹120</span>
                         <span class="price-unit">/ meal</span>
                     </div>
-                    <button class="add-btn" onclick="addToCart('Veg Standard Thali', 120, this)">+ Add to order</button>
-                </div>
-            </article>
+                    <div class="card-actions">
+                        <button type="button" class="add-btn" onclick="addToCart('Veg Standard Thali', 120, this)">+ Add to order</button>
+                        <div class="qty-stepper" role="group" aria-label="Veg Standard Thali quantity, 0 in order">
+                            <button type="button" class="qty-btn qty-minus" onclick="decrementCartItem('Veg Standard Thali')" aria-label="Remove one Veg Standard Thali">−</button>
+                            <span class="qty-value">0</span>
+                            <button type="button" class="qty-btn qty-plus" onclick="addToCart('Veg Standard Thali', 120, this)" aria-label="Add one more Veg Standard Thali">+</button>
+                        </div>
+                    </div>
+                </article>
+            </li>
 
-            <article class="card highlight-card">
+            <li class="card highlight-card" data-item="Special Deluxe Thali">
                 <span class="badge">Best<br>seller</span>
-                <div class="card-body">
+                <article class="card-body">
                     <div class="card-top-row">
-                        <span class="veg-dot" aria-hidden="true"></span>
+                        <span class="veg-dot" role="img" aria-label="Vegetarian"></span>
                         <h3>Special Deluxe Thali</h3>
                     </div>
                     <p>4 butter chapati, 2 sabji, dal tadka, jeera rice, sweet &amp; papad.</p>
@@ -111,14 +143,21 @@
                         <span class="price">₹160</span>
                         <span class="price-unit">/ meal</span>
                     </div>
-                    <button class="add-btn" onclick="addToCart('Special Deluxe Thali', 160, this)">+ Add to order</button>
-                </div>
-            </article>
+                    <div class="card-actions">
+                        <button type="button" class="add-btn" onclick="addToCart('Special Deluxe Thali', 160, this)">+ Add to order</button>
+                        <div class="qty-stepper" role="group" aria-label="Special Deluxe Thali quantity, 0 in order">
+                            <button type="button" class="qty-btn qty-minus" onclick="decrementCartItem('Special Deluxe Thali')" aria-label="Remove one Special Deluxe Thali">−</button>
+                            <span class="qty-value">0</span>
+                            <button type="button" class="qty-btn qty-plus" onclick="addToCart('Special Deluxe Thali', 160, this)" aria-label="Add one more Special Deluxe Thali">+</button>
+                        </div>
+                    </div>
+                </article>
+            </li>
 
-            <article class="card">
-                <div class="card-body">
+            <li class="card" data-item="Monthly Subscription">
+                <article class="card-body">
                     <div class="card-top-row">
-                        <span class="veg-dot" aria-hidden="true"></span>
+                        <span class="veg-dot" role="img" aria-label="Vegetarian"></span>
                         <h3>Monthly Veg Subscription</h3>
                     </div>
                     <p>30 days, lunch &amp; dinner, with a free dessert every week.</p>
@@ -126,16 +165,23 @@
                         <span class="price">₹3,500</span>
                         <span class="price-unit">/ month</span>
                     </div>
-                    <button class="add-btn" onclick="addToCart('Monthly Subscription', 3500, this)">+ Add to order</button>
-                </div>
-            </article>
-        </div>
+                    <div class="card-actions">
+                        <button type="button" class="add-btn" onclick="addToCart('Monthly Subscription', 3500, this)">+ Add to order</button>
+                        <div class="qty-stepper" role="group" aria-label="Monthly Subscription quantity, 0 in order">
+                            <button type="button" class="qty-btn qty-minus" onclick="decrementCartItem('Monthly Subscription')" aria-label="Remove one Monthly Subscription">−</button>
+                            <span class="qty-value">0</span>
+                            <button type="button" class="qty-btn qty-plus" onclick="addToCart('Monthly Subscription', 3500, this)" aria-label="Add one more Monthly Subscription">+</button>
+                        </div>
+                    </div>
+                </article>
+            </li>
+        </ul>
     </main>
 
     <!-- Checkout Modal Popup -->
     <div id="checkout-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
         <div class="modal-content">
-            <button class="close-btn" onclick="closeCheckout()" aria-label="Close order summary">&times;</button>
+            <button type="button" class="close-btn" onclick="closeCheckout()" aria-label="Close order summary">&times;</button>
 
             <div id="order-view">
                 <h2 id="checkout-title">Confirm your tiffin order</h2>
@@ -145,32 +191,38 @@
 
                 <form id="order-form" onsubmit="handleOrderSubmit(event)" novalidate>
                     <div>
-                        <input type="text" id="cust-name" placeholder="Your full name" required>
+                        <label for="cust-name" class="sr-only">Full name</label>
+                        <input type="text" id="cust-name" name="name" placeholder="Your full name" autocomplete="name" required>
                         <span class="field-error" id="err-name">Please enter your name.</span>
                     </div>
                     <div>
-                        <input type="tel" id="cust-phone" placeholder="10-digit phone number" required pattern="[0-9]{10}" maxlength="10">
+                        <label for="cust-phone" class="sr-only">Phone number</label>
+                        <input type="tel" id="cust-phone" name="phone" placeholder="10-digit phone number" autocomplete="tel" required pattern="[0-9]{10}" maxlength="10" inputmode="numeric">
                         <span class="field-error" id="err-phone">Enter a valid 10-digit phone number.</span>
                     </div>
                     <div>
-                        <textarea id="cust-address" placeholder="Delivery address" rows="3" required></textarea>
+                        <label for="cust-address" class="sr-only">Delivery address</label>
+                        <textarea id="cust-address" name="address" placeholder="Delivery address" rows="3" autocomplete="street-address" required></textarea>
                         <span class="field-error" id="err-address">Please enter a delivery address.</span>
                     </div>
                     <button type="submit" class="confirm-btn">Confirm &amp; place order</button>
                 </form>
             </div>
 
-            <div class="order-success" id="order-success">
-                <div class="stamp">✓</div>
+            <div class="order-success" id="order-success" role="status">
+                <div class="stamp" aria-hidden="true">✓</div>
                 <h3>Order placed, <span id="success-name"></span>!</h3>
                 <p id="success-detail"></p>
-                <button class="confirm-btn" onclick="closeCheckout()">Done</button>
+                <button type="button" class="confirm-btn" onclick="closeCheckout()">Done</button>
             </div>
         </div>
     </div>
 
+    <!-- Stacking toast container -->
+    <div id="toast-container" aria-live="polite" aria-atomic="false"></div>
+
     <footer>
-        © KD Tiffin Service 2026 — Est. 1992
+        <p>© KD Tiffin Service 2026 — Est. 1992</p>
     </footer>
 
     <!-- JS Logic Connection -->

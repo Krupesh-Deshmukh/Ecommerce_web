@@ -2,19 +2,33 @@
 // KD Tiffin Service — Order Logic
 // ==========================================
 
-// Global State: cart is a map of items keyed by name, each with qty
 let cart = {}; // { "Veg Standard Thali": { price: 120, qty: 2 }, ... }
 
-// DOM Elements
 const cartCountEl = document.getElementById('cart-count');
 const cartTotalEl = document.getElementById('cart-total');
+const cartSrLabelEl = document.getElementById('cart-sr-label');
 const greetingEl = document.getElementById('time-greeting');
 const checkoutModal = document.getElementById('checkout-modal');
 const orderSummaryEl = document.getElementById('order-summary');
 const orderViewEl = document.getElementById('order-view');
 const orderSuccessEl = document.getElementById('order-success');
+const orderFormEl = document.getElementById('order-form');
+const toastContainerEl = document.getElementById('toast-container');
 
-// 1. Dynamic Greeting based on time of day
+let lastFocusedEl = null;
+
+// Escape any dynamic text before it goes into innerHTML
+function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, (ch) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    }[ch]));
+}
+
+// 1. Dynamic greeting based on time of day
 function updateTimeGreeting() {
     const hour = new Date().getHours();
     if (hour < 11) {
@@ -30,12 +44,11 @@ function updateTimeGreeting() {
 function cartCount() {
     return Object.values(cart).reduce((sum, item) => sum + item.qty, 0);
 }
-
 function cartTotal() {
     return Object.values(cart).reduce((sum, item) => sum + item.price * item.qty, 0);
 }
 
-// 3. Add Item to Cart (merges quantity if item already present)
+// 3. Add item to cart (merges quantity if already present)
 function addToCart(itemName, price, btnEl) {
     if (cart[itemName]) {
         cart[itemName].qty += 1;
@@ -43,38 +56,81 @@ function addToCart(itemName, price, btnEl) {
         cart[itemName] = { price, qty: 1 };
     }
     updateCartUI();
+    syncCardQuantities();
     showNotification(`Added ${itemName} — ₹${price}`);
 
-    if (btnEl) {
+    // Only run the flash animation on the full-size "Add" button,
+    // not on the compact qty-stepper "+" control.
+    if (btnEl && btnEl.classList.contains('add-btn')) {
         const original = btnEl.textContent;
+        btnEl.disabled = true;
         btnEl.textContent = "✓ Added";
         btnEl.classList.add('added');
         setTimeout(() => {
             btnEl.textContent = original;
             btnEl.classList.remove('added');
-        }, 900);
+            btnEl.disabled = false;
+        }, 700);
     }
 }
 
-// 4. Remove one item line entirely from the cart
+// 4. Decrease quantity of one item by one (removes the line at 0)
+function decrementCartItem(itemName) {
+    if (!cart[itemName]) return;
+    cart[itemName].qty -= 1;
+    if (cart[itemName].qty <= 0) delete cart[itemName];
+    updateCartUI();
+    renderOrderSummary();
+    syncCardQuantities();
+
+    if (checkoutModal.style.display === 'flex') {
+        if (cartCount() === 0) closeCheckout();
+    }
+}
+
+// 5. Remove one item line entirely from the cart
 function removeFromCart(itemName) {
     delete cart[itemName];
     updateCartUI();
     renderOrderSummary();
+    syncCardQuantities();
+
+    if (cartCount() === 0) {
+        closeCheckout();
+    }
 }
 
-// 5. Update Cart Badge and Total Display
+// 6. Update cart badge, total display and the accessible label
 function updateCartUI() {
-    cartCountEl.textContent = cartCount();
-    cartTotalEl.textContent = cartTotal();
+    const count = cartCount();
+    const total = cartTotal();
+    cartCountEl.textContent = count;
+    cartTotalEl.textContent = total;
+    if (cartSrLabelEl) {
+        cartSrLabelEl.textContent = `View your order, currently ${count} item${count === 1 ? '' : 's'}, total ₹${total}`;
+    }
 }
 
-// 6. Toast Notification
+// 7. Keep each product card's quantity stepper in sync with the cart
+function syncCardQuantities() {
+    document.querySelectorAll('.card[data-item]').forEach((card) => {
+        const name = card.dataset.item;
+        const qty = cart[name] ? cart[name].qty : 0;
+        const valueEl = card.querySelector('.qty-value');
+        const stepper = card.querySelector('.qty-stepper');
+
+        if (valueEl) valueEl.textContent = qty;
+        if (stepper) stepper.setAttribute('aria-label', `${name} quantity, ${qty} in order`);
+        card.classList.toggle('has-qty', qty > 0);
+    });
+}
+
+// 8. Toast notifications (stack in a fixed container instead of overlapping)
 function showNotification(message) {
     const toast = document.createElement('div');
     toast.className = 'toast-notification';
     toast.textContent = message;
-    document.body.appendChild(toast);
+    toastContainerEl.appendChild(toast);
 
     requestAnimationFrame(() => toast.classList.add('show'));
 
@@ -84,7 +140,7 @@ function showNotification(message) {
     }, 2200);
 }
 
-// 7. Render itemized order summary inside the modal
+// 9. Render itemized order summary inside the modal
 function renderOrderSummary() {
     const entries = Object.entries(cart);
 
@@ -93,42 +149,95 @@ function renderOrderSummary() {
         return;
     }
 
-    let rows = entries.map(([name, item]) => `
+    let rows = entries.map(([name, item]) => {
+        const safeName = escapeHtml(name);
+        const safeKey = name.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        return `
         <div class="order-line">
-            <span class="line-name">${name}</span>
+            <span class="line-name">${safeName}</span>
             <span class="line-qty">×${item.qty}</span>
             <span class="line-price">₹${item.price * item.qty}</span>
-            <button type="button" class="remove-line" onclick="removeFromCart('${name.replace(/'/g, "\\'")}')">remove</button>
+            <button type="button" class="remove-line" onclick="removeFromCart('${safeKey}')" aria-label="Remove ${safeName} from order">remove</button>
         </div>
-    `).join('');
+    `;
+    }).join('');
 
     rows += `<div class="order-total-row"><span>Total</span><span>₹${cartTotal()}</span></div>`;
     orderSummaryEl.innerHTML = rows;
 }
 
-// 8. Modal Open / Close Logic
+// 10. Modal open / close logic
 function openCheckout() {
     if (cartCount() === 0) {
         showNotification("Your order is empty — add a tiffin plan first.");
         return;
     }
+    lastFocusedEl = document.activeElement;
+
     orderViewEl.style.display = "block";
     orderSuccessEl.classList.remove('show');
     renderOrderSummary();
     checkoutModal.style.display = "flex";
+    document.body.classList.add('modal-open');
+
+    const firstField = document.getElementById('cust-name');
+    if (firstField) firstField.focus();
+
+    document.addEventListener('keydown', handleModalKeydown);
 }
 
 function closeCheckout() {
     checkoutModal.style.display = "none";
+    document.body.classList.remove('modal-open');
+    document.removeEventListener('keydown', handleModalKeydown);
+
+    if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
+        lastFocusedEl.focus();
+    }
 }
 
-// 9. Inline field validation (no alert())
+function handleModalKeydown(event) {
+    if (event.key === 'Escape') {
+        closeCheckout();
+        return;
+    }
+
+    if (event.key === 'Tab') {
+        const focusable = Array.from(
+            checkoutModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+        ).filter((el) => el.offsetParent !== null); // only currently visible elements
+
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    }
+}
+
+// Clicking the dimmed backdrop closes the modal, same as the × button
+checkoutModal.addEventListener('click', (event) => {
+    if (event.target === checkoutModal) {
+        closeCheckout();
+    }
+});
+
+// 11. Inline field validation (no alert())
 function setFieldError(inputId, errorId, isValid) {
+    const inputEl = document.getElementById(inputId);
     const errorEl = document.getElementById(errorId);
     errorEl.classList.toggle('show', !isValid);
+    if (inputEl) inputEl.setAttribute('aria-invalid', String(!isValid));
 }
 
-// 10. Handle Order Form Submission
+// 12. Handle order form submission
 function handleOrderSubmit(event) {
     event.preventDefault();
 
@@ -149,12 +258,14 @@ function handleOrderSubmit(event) {
     setFieldError('cust-address', 'err-address', addressValid);
 
     if (!nameValid || !phoneValid || !addressValid) {
+        if (!nameValid) nameEl.focus();
+        else if (!phoneValid) phoneEl.focus();
+        else if (!addressValid) addressEl.focus();
         return;
     }
 
     const total = cartTotal();
 
-    // Show inline success state instead of a browser alert
     document.getElementById('success-name').textContent = name;
     document.getElementById('success-detail').textContent =
         `Total ₹${total} will be delivered to: ${address}. We'll call ${phone} to confirm the timing.`;
@@ -165,10 +276,14 @@ function handleOrderSubmit(event) {
     // Reset state for the next order
     cart = {};
     updateCartUI();
-    document.getElementById('order-form').reset();
+    syncCardQuantities();
+    orderFormEl.reset();
 }
 
-// Initialize Page Features
+// Initialize page features
 document.addEventListener('DOMContentLoaded', () => {
     updateTimeGreeting();
+    updateCartUI();
+    syncCardQuantities();
+    setInterval(updateTimeGreeting, 5 * 60 * 1000);
 });
