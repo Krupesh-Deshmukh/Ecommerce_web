@@ -3,26 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KD Tiffin Services — home-cooked Indian thalis and monthly tiffin subscriptions, delivered daily since 1992.">
+
+    <!-- Favicon: inline SVG, no external file dependency to break -->
+   <link rel="icon"  href="C:\Users\krupe\Downloads\favicon.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,600&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>KD Tiffin Services — Home-cooked, delivered daily</title>
 </head>
 <body>
+
+    <!-- Header Navigation -->
     <nav>
-        <h2><img src="C:\Users\krupe\OneDrive\Documents\Tiffin.jpg" alt="Tiffin logo">
-            Welcome, To Our Tiffin Services
-            <img src="C:\Users\krupe\OneDrive\Documents\Tiffin.jpg" alt="Tiffin logo">
-        </h2>
-        <div></div>
+        <div class="brand">
+            <svg class="brand-mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect width="64" height="64" rx="14" fill="#7A1225"/>
+                <rect x="16" y="14" width="32" height="8" rx="2" fill="#D9A438"/>
+                <rect x="16" y="24" width="32" height="8" rx="2" fill="#F3E7D6"/>
+                <rect x="16" y="34" width="32" height="8" rx="2" fill="#D9A438"/>
+                <rect x="16" y="44" width="32" height="8" rx="2" fill="#F3E7D6"/>
+                <rect x="27" y="8" width="10" height="6" rx="2" fill="#8A8D91"/>
+            </svg>
+            <h2>KD Tiffin Services<span class="est">Est. 1992 &middot; Homestyle</span></h2>
+        </div>
+
+        <!-- Cart Status Button -->
+        <button class="cart-btn" onclick="openCheckout()" aria-label="View your order">
+            🍱 Order <span class="cart-figure" id="cart-count">0</span> · ₹<span class="cart-figure" id="cart-total">0</span>
+        </button>
     </nav>
-    <div class="content">
-        Our Tiffin Service is provided to you from the, Since 1992 <br>
-        with Same and the Original Indian Asthetic Taste,<br>
-        Our various food varities attract peoples and <br>
-        and get the better experience or also reviews
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-text">
+            <span class="eyebrow">Daily tiffin &middot; Pune &amp; nearby</span>
+            <h1>Home-cooked meals, <em>stacked in steel</em>, at your door by lunch.</h1>
+            <p>Since 1992, KD Tiffin has been packing fresh sabji, dal, rotis and rice the way your own kitchen would — no shortcuts, no preservatives, just today's cooking in today's tiffin.</p>
+            <button class="hero-cta" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">
+                See today's thalis ↓
+            </button>
+        </div>
+        <div class="hero-art">
+            <svg class="dabba" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a stacked steel tiffin box">
+                <path class="steam" d="M70 40 C 60 20, 80 20, 70 0" stroke="#C7C9CC" stroke-width="5" fill="none" stroke-linecap="round"/>
+                <path class="steam s2" d="M100 40 C 90 20, 110 20, 100 0" stroke="#C7C9CC" stroke-width="5" fill="none" stroke-linecap="round"/>
+                <path class="steam s3" d="M130 40 C 120 20, 140 20, 130 0" stroke="#C7C9CC" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+                <!-- handle -->
+                <path d="M80 46 Q100 20 120 46" stroke="#8A8D91" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+                <!-- tiers -->
+                <rect x="30" y="44" width="140" height="44" rx="10" fill="#D9A438"/>
+                <rect x="30" y="44" width="140" height="10" rx="5" fill="#EFC46B"/>
+
+                <rect x="26" y="92" width="148" height="44" rx="10" fill="#F3E7D6"/>
+                <rect x="26" y="92" width="148" height="10" rx="5" fill="#FFFDF8"/>
+
+                <rect x="30" y="140" width="140" height="44" rx="10" fill="#D9A438"/>
+                <rect x="30" y="140" width="140" height="10" rx="5" fill="#EFC46B"/>
+
+                <rect x="20" y="188" width="160" height="40" rx="12" fill="#7A1225"/>
+                <rect x="20" y="188" width="160" height="10" rx="5" fill="#93283B"/>
+            </svg>
+        </div>
+    </section>
+
+    <main class="main-container">
+        <!-- Dynamic Greeting Banner -->
+        <div id="time-greeting" class="banner-greeting">Loading today's special…</div>
+
+        <!-- Tiffin Menu Section -->
+        <div class="section-heading" id="menu">
+            <h2>Today's Tiffin Line-Up</h2>
+            <span>Packed fresh &middot; delivered hot</span>
+        </div>
+
+        <div class="menu-grid">
+            <article class="card">
+                <div class="card-body">
+                    <div class="card-top-row">
+                        <span class="veg-dot" aria-hidden="true"></span>
+                        <h3>Veg Standard Thali</h3>
+                    </div>
+                    <p>4 chapati, seasonal sabji, dal, steamed rice &amp; salad.</p>
+                    <div class="price-row">
+                        <span class="price">₹120</span>
+                        <span class="price-unit">/ meal</span>
+                    </div>
+                    <button class="add-btn" onclick="addToCart('Veg Standard Thali', 120, this)">+ Add to order</button>
+                </div>
+            </article>
+
+            <article class="card highlight-card">
+                <span class="badge">Best<br>seller</span>
+                <div class="card-body">
+                    <div class="card-top-row">
+                        <span class="veg-dot" aria-hidden="true"></span>
+                        <h3>Special Deluxe Thali</h3>
+                    </div>
+                    <p>4 butter chapati, 2 sabji, dal tadka, jeera rice, sweet &amp; papad.</p>
+                    <div class="price-row">
+                        <span class="price">₹160</span>
+                        <span class="price-unit">/ meal</span>
+                    </div>
+                    <button class="add-btn" onclick="addToCart('Special Deluxe Thali', 160, this)">+ Add to order</button>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-body">
+                    <div class="card-top-row">
+                        <span class="veg-dot" aria-hidden="true"></span>
+                        <h3>Monthly Veg Subscription</h3>
+                    </div>
+                    <p>30 days, lunch &amp; dinner, with a free dessert every week.</p>
+                    <div class="price-row">
+                        <span class="price">₹3,500</span>
+                        <span class="price-unit">/ month</span>
+                    </div>
+                    <button class="add-btn" onclick="addToCart('Monthly Subscription', 3500, this)">+ Add to order</button>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- Checkout Modal Popup -->
+    <div id="checkout-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeCheckout()" aria-label="Close order summary">&times;</button>
+
+            <div id="order-view">
+                <h2 id="checkout-title">Confirm your tiffin order</h2>
+                <p class="modal-sub">Delivery details</p>
+
+                <div class="order-summary" id="order-summary"></div>
+
+                <form id="order-form" onsubmit="handleOrderSubmit(event)" novalidate>
+                    <div>
+                        <input type="text" id="cust-name" placeholder="Your full name" required>
+                        <span class="field-error" id="err-name">Please enter your name.</span>
+                    </div>
+                    <div>
+                        <input type="tel" id="cust-phone" placeholder="10-digit phone number" required pattern="[0-9]{10}" maxlength="10">
+                        <span class="field-error" id="err-phone">Enter a valid 10-digit phone number.</span>
+                    </div>
+                    <div>
+                        <textarea id="cust-address" placeholder="Delivery address" rows="3" required></textarea>
+                        <span class="field-error" id="err-address">Please enter a delivery address.</span>
+                    </div>
+                    <button type="submit" class="confirm-btn">Confirm &amp; place order</button>
+                </form>
+            </div>
+
+            <div class="order-success" id="order-success">
+                <div class="stamp">✓</div>
+                <h3>Order placed, <span id="success-name"></span>!</h3>
+                <p id="success-detail"></p>
+                <button class="confirm-btn" onclick="closeCheckout()">Done</button>
+            </div>
+        </div>
     </div>
-    <h3>This Is the GIT Hub Tutorial Heading to check every thing is working or not</h3>
+
     <footer>
-        All Copyrights are reserved KD Tiffin Service 2026
+        © KD Tiffin Service 2026 — Est. 1992
     </footer>
+
+    <!-- JS Logic Connection -->
+    <script src="script.js"></script>
 </body>
 </html>
